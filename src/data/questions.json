@@ -1,0 +1,83 @@
+[
+    {
+      "question": "Was ist die Hauptstadt von Deutschland?",
+      "options": ["Berlin", "München", "Hamburg", "Frankfurt"],
+      "correctAnswer": "Berlin"
+    },
+    {
+      "question": "Wer schrieb 'Faust'?",
+      "options": ["Johann Wolfgang von Goethe", "Friedrich Schiller", "Heinrich Heine", "Thomas Mann"],
+      "correctAnswer": "Johann Wolfgang von Goethe"
+    },
+    {
+      "question": "Welches Element hat das chemische Symbol 'O'?",
+      "options": ["Sauerstoff", "Gold", "Silber", "Zink"],
+      "correctAnswer": "Sauerstoff"
+    },
+    {
+      "question": "In welchem Jahr landeten die ersten Menschen auf dem Mond?",
+      "options": ["1969", "1972", "1959", "1980"],
+      "correctAnswer": "1969"
+    },
+    {
+      "question": "Welches Land hat die größte Fläche?",
+      "options": ["Russland", "Kanada", "China", "USA"],
+      "correctAnswer": "Russland"
+    },
+    {
+      "question": "Wer malte das berühmte Bild 'Die Mona Lisa'?",
+      "options": ["Leonardo da Vinci", "Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
+      "correctAnswer": "Leonardo da Vinci"
+    },
+    {
+      "question": "Wie viele Bundesländer hat Deutschland?",
+      "options": ["16", "12", "10", "14"],
+      "correctAnswer": "16"
+    },
+    {
+      "question": "Was ist die größte Tierart der Welt?",
+      "options": ["Blauwal", "Elefant", "Giraffe", "Krokodil"],
+      "correctAnswer": "Blauwal"
+    },
+    {
+      "question": "Was ist die kleinste Einheit der Materie?",
+      "options": ["Atom", "Molekül", "Zelle", "Teilchen"],
+      "correctAnswer": "Atom"
+    },
+    {
+      "question": "Welcher Planet ist der vierte von der Sonne entfernt?",
+      "options": ["Mars", "Jupiter", "Saturn", "Venus"],
+      "correctAnswer": "Mars"
+    },
+    {
+      "question": "In welchem Jahr fiel die Berliner Mauer?",
+      "options": ["1989", "1991", "1975", "1963"],
+      "correctAnswer": "1989"
+    },
+    {
+      "question": "Wer entdeckte das Penicillin?",
+      "options": ["Alexander Fleming", "Marie Curie", "Albert Einstein", "Louis Pasteur"],
+      "correctAnswer": "Alexander Fleming"
+    },
+    {
+      "question": "Welches Land hat die meisten Einwohner?",
+      "options": ["China", "Indien", "USA", "Indonesien"],
+      "correctAnswer": "China"
+    },
+    {
+      "question": "Was ist das stärkste natürliche Material auf der Erde?",
+      "options": ["Diamant", "Kohlenstoff", "Eisen", "Gold"],
+      "correctAnswer": "Diamant"
+    },
+    {
+      "question": "Welcher Kontinent hat die größte Landmasse?",
+      "options": ["Asien", "Afrika", "Europa", "Nordamerika"],
+      "correctAnswer": "Asien"
+    },
+    {
+      "question": "Was ist die Währung in Japan?",
+      "options": ["Yen", "Dollar", "Euro", "Won"],
+      "correctAnswer": "Yen"
+    }
+  ]
+  
