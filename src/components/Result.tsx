@@ -1,11 +1,10 @@
-import { FC } from 'react';
-
 interface ResultProps {
   score: number;
   totalQuestions: number;
+  onReturnToStart: () => void;
 }
 
-const Result: FC<ResultProps> = ({ score, totalQuestions }) => {
+function Result ({ score, totalQuestions, onReturnToStart }: ResultProps) {
   return (
     <div className="result-container">
       <h2>Quiz Finished!</h2>
@@ -13,6 +12,7 @@ const Result: FC<ResultProps> = ({ score, totalQuestions }) => {
         You scored {score} out of {totalQuestions}.
       </p>
       <p>{score === totalQuestions ? 'Perfect!' : 'Good try!'}</p>
+      <button onClick={onReturnToStart}>Return to Start</button>
     </div>
   );
 };

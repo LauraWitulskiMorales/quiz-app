@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import '../styles/App.css'
+import { useEffect, useState } from "react";
+import Quiz from "./Quiz";
+import Result from "./Result";
+import "../styles/App.css";
+import questions from "../data/Questions.json";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const savedState = localStorage.getItem('quizState');
+  const initialState = savedState ? JSON.parse(savedState) : { currentQuestionIndex: 0, localScore: 0 };
+
+  const [gameStarted, setGameStarted] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
+  const [gameOptionsVisible, setGameOptionsVisible] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialState.currentQuestionIndex);
+
+  useEffect(() => {
+    const savedState = localStorage.getItem('quizState');
+    if (savedState) {
+      setGameOptionsVisible(true); 
+    }
+  }, []);
+
+  const startGame = () => {
+    setGameStarted(true);
+    setScore(0);
+    setShowResult(false);
+    setGameOptionsVisible(false);
+    setCurrentQuestionIndex(0);
+  };
+
+  const handleEndOrExit = (userExit: boolean = false) => {
+      if (userExit) {
+        setShowResult(true);
+        setGameStarted(false);
+        setGameOptionsVisible(false);
+        localStorage.removeItem('quizState');
+      }
+  }
+
+  const continueGame = () => {
+    setGameOptionsVisible(false);
+    setGameStarted(true);
+  }
+
+  const restartGame = () => {
+    localStorage.removeItem('quizState');
+    setScore(0);
+    setGameStarted(true);
+    setGameOptionsVisible(false);
+    setCurrentQuestionIndex(0);
+  }
+
+  const goToStartScreen = () => {
+        setGameStarted(false);
+        setShowResult(false);
+        setGameOptionsVisible(false);
+        setScore(0);
+        
+  }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app-container">
+
+{gameOptionsVisible && !gameStarted && !showResult && (
+      <div className="game-options">
+        <p>Score: {score}</p>
+        <p>Question: {currentQuestionIndex + 1} / {questions.length} </p>
+      <button onClick={continueGame}>Continue Game</button>
+          <button onClick={restartGame}>Restart Game</button>
+          <button onClick={() => handleEndOrExit(true)}>Exit Game</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+)}
+
+      {!gameStarted && !gameOptionsVisible && !showResult && (
+        <button onClick={startGame}>Start Quiz</button>
+      )}
+      {gameStarted && !showResult && (
+        <Quiz setScore={setScore} endGame={handleEndOrExit} />
+      )}
+
+      {showResult && (
+        <Result 
+        score={score} 
+        totalQuestions={questions.length} 
+        onReturnToStart={goToStartScreen} 
+        />
+      )}
+        </div>
+  );
 }
 
-export default App
+export default App;

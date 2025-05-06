@@ -1,15 +1,11 @@
-import { FC } from 'react';
+import React from 'react';
 
 interface ScoreProps {
   score: number;
 }
 
-const Score: FC<ScoreProps> = ({ score }) => {
-  return (
-    <div className="score-container">
-      <h3>Score: {score}</h3>
-    </div>
-  );
-};
+const Score: React.FC<ScoreProps> = ({ score }) => (
+  <div className="score">Score: {score}</div>
+);
 
 export default Score;

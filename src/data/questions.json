@@ -1,83 +1,218 @@
 [
-    {
-      "question": "Was ist die Hauptstadt von Deutschland?",
-      "options": ["Berlin", "München", "Hamburg", "Frankfurt"],
-      "correctAnswer": "Berlin"
-    },
-    {
-      "question": "Wer schrieb 'Faust'?",
-      "options": ["Johann Wolfgang von Goethe", "Friedrich Schiller", "Heinrich Heine", "Thomas Mann"],
-      "correctAnswer": "Johann Wolfgang von Goethe"
-    },
-    {
-      "question": "Welches Element hat das chemische Symbol 'O'?",
-      "options": ["Sauerstoff", "Gold", "Silber", "Zink"],
-      "correctAnswer": "Sauerstoff"
-    },
-    {
-      "question": "In welchem Jahr landeten die ersten Menschen auf dem Mond?",
-      "options": ["1969", "1972", "1959", "1980"],
-      "correctAnswer": "1969"
-    },
-    {
-      "question": "Welches Land hat die größte Fläche?",
-      "options": ["Russland", "Kanada", "China", "USA"],
-      "correctAnswer": "Russland"
-    },
-    {
-      "question": "Wer malte das berühmte Bild 'Die Mona Lisa'?",
-      "options": ["Leonardo da Vinci", "Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
-      "correctAnswer": "Leonardo da Vinci"
-    },
-    {
-      "question": "Wie viele Bundesländer hat Deutschland?",
-      "options": ["16", "12", "10", "14"],
-      "correctAnswer": "16"
-    },
-    {
-      "question": "Was ist die größte Tierart der Welt?",
-      "options": ["Blauwal", "Elefant", "Giraffe", "Krokodil"],
-      "correctAnswer": "Blauwal"
-    },
-    {
-      "question": "Was ist die kleinste Einheit der Materie?",
-      "options": ["Atom", "Molekül", "Zelle", "Teilchen"],
-      "correctAnswer": "Atom"
-    },
-    {
-      "question": "Welcher Planet ist der vierte von der Sonne entfernt?",
-      "options": ["Mars", "Jupiter", "Saturn", "Venus"],
-      "correctAnswer": "Mars"
-    },
-    {
-      "question": "In welchem Jahr fiel die Berliner Mauer?",
-      "options": ["1989", "1991", "1975", "1963"],
-      "correctAnswer": "1989"
-    },
-    {
-      "question": "Wer entdeckte das Penicillin?",
-      "options": ["Alexander Fleming", "Marie Curie", "Albert Einstein", "Louis Pasteur"],
-      "correctAnswer": "Alexander Fleming"
-    },
-    {
-      "question": "Welches Land hat die meisten Einwohner?",
-      "options": ["China", "Indien", "USA", "Indonesien"],
-      "correctAnswer": "China"
-    },
-    {
-      "question": "Was ist das stärkste natürliche Material auf der Erde?",
-      "options": ["Diamant", "Kohlenstoff", "Eisen", "Gold"],
-      "correctAnswer": "Diamant"
-    },
-    {
-      "question": "Welcher Kontinent hat die größte Landmasse?",
-      "options": ["Asien", "Afrika", "Europa", "Nordamerika"],
-      "correctAnswer": "Asien"
-    },
-    {
-      "question": "Was ist die Währung in Japan?",
-      "options": ["Yen", "Dollar", "Euro", "Won"],
-      "correctAnswer": "Yen"
-    }
-  ]
-  
+  {
+    "question": "What is the longest word in the English language?",
+    "options": [
+      "Antidisestablishmentarianism",
+      "Hippopotomonstrosesquippedaliophobia",
+      "Floccinaucinihilipilification"
+    ],
+    "answer": "Antidisestablishmentarianism"
+  },
+  {
+    "question": "What is the name of the world’s smallest horse?",
+    "options": [
+      "Falabella",
+      "Shetland pony",
+      "Miniature horse"
+    ],
+    "answer": "Miniature horse"
+  },
+  {
+    "question": "What is Benedictine monk Dom Pierre Pérignon rumored to have created?",
+    "options": [
+      "Tomato ketchup",
+      "Champagne",
+      "French fries"
+    ],
+    "answer": "Champagne"
+  },
+  {
+    "question": "Which country drinks the most amount of coffee per person?",
+    "options": [
+      "Finland",
+      "Italy",
+      "Colombia"
+    ],
+    "answer": "Finland"
+  },
+  {
+    "question": "What is the collective name for a group of unicorns?",
+    "options": [
+      "A sparkle",
+      "A spell",
+      "A blessing"
+    ],
+    "answer": "A blessing"
+  },
+  {
+    "question": "What is the most common color of toilet paper in France?",
+    "options": [
+      "Pink",
+      "White",
+      "Blue"
+    ],
+    "answer": "Pink"
+  },
+  {
+    "question": "How many years old is the world’s oldest piece of chewing gum?",
+    "options": [
+      "100",
+      "2,500",
+      "5,700"
+    ],
+    "answer": "5,700"
+  },
+  {
+    "question": "How many times per day does the average American open their fridge?",
+    "options": [
+      "5",
+      "22",
+      "33"
+    ],
+    "answer": "33"
+  },
+  {
+    "question": "What color is an airplane’s famous black box?",
+    "options": [
+      "Red",
+      "Orange",
+      "Black"
+    ],
+    "answer": "Orange"
+  },
+  {
+    "question": "What is Bombay Duck’s main ingredient?",
+    "options": [
+      "Fish",
+      "Duck",
+      "Chicken"
+    ],
+    "answer": "Fish"
+  },
+  {
+    "question": "What is the only letter not to appear in any U.S. state name?",
+    "options": [
+      "Q",
+      "Z",
+      "X"
+    ],
+    "answer": "Q"
+  },
+  {
+    "question": "Which animal cannot jump?",
+    "options": [
+      "Elephant",
+      "Sloth",
+      "Hippo"
+    ],
+    "answer": "Elephant"
+  },
+  {
+    "question": "What is the dot over the letter 'i' called?",
+    "options": [
+      "Tittle",
+      "Nubbin",
+      "Ping"
+    ],
+    "answer": "Tittle"
+  },
+  {
+    "question": "Which country has a unicorn as its national animal?",
+    "options": [
+      "Scotland",
+      "New Zealand",
+      "Norway"
+    ],
+    "answer": "Scotland"
+  },
+  {
+    "question": "What is the technical term for the fear of long words?",
+    "options": [
+      "Hippopotomonstrosesquippedaliophobia",
+      "Sesquipedalophobia",
+      "Logophobia"
+    ],
+    "answer": "Hippopotomonstrosesquippedaliophobia"
+  },
+  {
+    "question": "Which fruit has its seeds on the outside?",
+    "options": [
+      "Strawberry",
+      "Kiwi",
+      "Pineapple"
+    ],
+    "answer": "Strawberry"
+  },
+  {
+    "question": "Which planet has the most moons?",
+    "options": [
+      "Jupiter",
+      "Saturn",
+      "Mars"
+    ],
+    "answer": "Saturn"
+  },
+  {
+    "question": "In what country would you find the ancient city of Petra?",
+    "options": [
+      "Jordan",
+      "Egypt",
+      "Greece"
+    ],
+    "answer": "Jordan"
+  },
+  {
+    "question": "Which animal can sleep for up to 3 years at a time?",
+    "options": [
+      "Snail",
+      "Bear",
+      "Koala"
+    ],
+    "answer": "Snail"
+  },
+  {
+    "question": "What is the name of the largest ocean on Earth?",
+    "options": [
+      "Atlantic Ocean",
+      "Indian Ocean",
+      "Pacific Ocean"
+    ],
+    "answer": "Pacific Ocean"
+  },
+  {
+    "question": "Which vegetable is known as 'courgette' in the UK?",
+    "options": [
+      "Cucumber",
+      "Zucchini",
+      "Squash"
+    ],
+    "answer": "Zucchini"
+  },
+  {
+    "question": "What is the smallest country in the world?",
+    "options": [
+      "Monaco",
+      "Vatican City",
+      "San Marino"
+    ],
+    "answer": "Vatican City"
+  },
+  {
+    "question": "Which element has the chemical symbol 'O'?",
+    "options": [
+      "Oxygen",
+      "Osmium",
+      "Ozone"
+    ],
+    "answer": "Oxygen"
+  },
+  {
+    "question": "Which bird is known for its colorful tail feathers and ability to mimic sounds?",
+    "options": [
+      "Parrot",
+      "Peacock",
+      "Penguin"
+    ],
+    "answer": "Parrot"
+  }
+]
