@@ -7,12 +7,15 @@ import questions from "../data/Questions.json";
 function App() {
   const savedState = localStorage.getItem('quizState');
   const initialState = savedState ? JSON.parse(savedState) : { currentQuestionIndex: 0, localScore: 0 };
+  const MAX_LIVES = 5;
 
   const [gameStarted, setGameStarted] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState<number>(initialState.score);
   const [gameOptionsVisible, setGameOptionsVisible] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialState.currentQuestionIndex);
+  const [gameEndedDueToLives, setGameEndedDueToLives] = useState(false);
+  const [lives, setLives] = useState(MAX_LIVES);
 
   useEffect(() => {
     const savedState = localStorage.getItem('quizState');
@@ -29,14 +32,14 @@ function App() {
     setCurrentQuestionIndex(0);
   };
 
-  const handleEndOrExit = (userExit: boolean = false) => {
-      if (userExit) {
-        setShowResult(true);
-        setGameStarted(false);
-        setGameOptionsVisible(false);
-        localStorage.removeItem('quizState');
-      }
-  }
+  const handleEndOrExit = (gameEndedDueToLives: boolean) => {
+    setGameEndedDueToLives(gameEndedDueToLives);  
+    setShowResult(true);
+    setGameStarted(false);
+    setGameOptionsVisible(false);
+    localStorage.removeItem('quizState');
+  };
+  
 
   const continueGame = () => {
     setGameOptionsVisible(false);
@@ -69,7 +72,7 @@ function App() {
         <p>Question: {currentQuestionIndex + 1} / {questions.length} </p>
       <button onClick={continueGame}>Continue Game</button>
           <button onClick={restartGame}>Restart Game</button>
-          <button onClick={() => handleEndOrExit(true)}>Exit Game</button>
+          <button onClick={() => handleEndOrExit(false)}>Exit Game</button>
       </div>
 )}
 
@@ -77,7 +80,14 @@ function App() {
         <button onClick={startGame}>Start Quiz</button>
       )}
       {gameStarted && !showResult && (
-        <Quiz setScore={setScore} endGame={handleEndOrExit} />
+        <Quiz 
+        score={score} 
+        setScore={setScore} 
+        endGame={handleEndOrExit}
+        lives={lives}
+        setLives={setLives}
+        maxLives={MAX_LIVES} 
+        />
       )}
 
       {showResult && (
@@ -85,6 +95,9 @@ function App() {
         score={score} 
         totalQuestions={questions.length} 
         onReturnToStart={goToStartScreen} 
+        gameEndReason={gameEndedDueToLives ? 'lives' : 'completed'}
+        lives={lives}
+        maxLives={MAX_LIVES}
         />
       )}
         </div>

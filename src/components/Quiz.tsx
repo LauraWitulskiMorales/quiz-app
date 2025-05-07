@@ -3,22 +3,26 @@ import Question from "./Question";
 import questions from "../data/Questions.json";
 
 type QuizProps = {
-  setScore: (score: number) => void;
-  endGame: (isCorrect: boolean) => void;
+  score: number;
+  setScore: React.Dispatch<React.SetStateAction<number>>;
+  endGame: (userExited: boolean, gameEndedDueToLives: boolean) => void;
+  lives: number;
+  setLives: React.Dispatch<React.SetStateAction<number>>; // ✅ add this
+  maxLives: number;
 };
 
-function Quiz({ setScore, endGame }: QuizProps) {
+function Quiz({ score, setScore, endGame }: QuizProps) {
   const savedState = localStorage.getItem('quizState');
-  const initialState = savedState ? JSON.parse(savedState) : { currentQuestionIndex: 0, localScore: 0 };
-
+  const initialState = savedState ? JSON.parse(savedState) : { currentQuestionIndex: 0, score: 0 };
+  
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialState.currentQuestionIndex);
-  const [localScore, setLocalScore] = useState(initialState.localScore);
-  const [answerFeedback, setAnswerFeedback] = useState<string>('')
+  const [answerFeedback, setAnswerFeedback] = useState<string>('');
+  const [lives, setLives] = useState(5);
 
   useEffect(() => {
-    const gameState = { currentQuestionIndex, localScore };
+    const gameState = { currentQuestionIndex, score };
     localStorage.setItem("quizState", JSON.stringify(gameState));
-    }, [currentQuestionIndex, localScore]);
+    }, [currentQuestionIndex, score]);
 
   const handleSkip = () => {
     const nextQuestionIndex = currentQuestionIndex + 1;
@@ -29,32 +33,37 @@ function Quiz({ setScore, endGame }: QuizProps) {
 
   const handleAnswer = (isCorrect: boolean) => {
     if (isCorrect) {
-      setLocalScore((prev: number) => prev + 1);
+      setScore((prev: number) => prev + 1);
       setAnswerFeedback('Correct!'); 
     } else {
       setAnswerFeedback('Incorrect!');
+      setLives((prev: number) => prev - 1);
     }
 
-    const nextIndex = currentQuestionIndex + 1;
-    if (nextIndex < questions.length) {
-      setCurrentQuestionIndex(nextIndex);
+    if (lives === 1) {
+      endGame(false, true);
     } else {
-      setScore(localScore + (isCorrect ? 1 : 0));
-      endGame(true);
-    }
+      const nextIndex = currentQuestionIndex + 1;
+        if (nextIndex < questions.length) {
+          setCurrentQuestionIndex(nextIndex);
+        } else if (lives <= 0) {
+          endGame(true, false);
+        }
+      } 
   };
 
   const handleExit = () => {
-    setScore(localScore);
-    endGame(true);
+    endGame(false, false);
   }
 
   return (
     <div> 
-      <div className="score">Score: {localScore}</div>  
-      <div className="counter">
-        Question {currentQuestionIndex + 1} / {questions.length}
-      </div>
+
+      <div className="lives">{"❤️".repeat(lives)}</div>
+      <div className="score">Score: {score}</div>  
+      <div className="counter">Question: {currentQuestionIndex + 1} / {questions.length}</div>
+      <div className="feedback">{answerFeedback}</div>
+
       <Question
         question={questions[currentQuestionIndex]}
         onAnswer={handleAnswer}
@@ -63,7 +72,6 @@ function Quiz({ setScore, endGame }: QuizProps) {
         <button onClick={handleSkip}>Skip Question</button>
         <button onClick={handleExit}>Exit Game</button>
       </div>
-      <div className="feedback">{answerFeedback}</div> 
     </div>
   );
 }
