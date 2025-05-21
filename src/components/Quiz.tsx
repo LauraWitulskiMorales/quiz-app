@@ -1,8 +1,8 @@
 // This file handles the game flow and the general layout
 
-import { useEffect, useState } from "react";
-import Question from "./Question";
-import questions from "../data/Questions.json";
+import { useEffect, useState } from 'react';
+import Question from './Question';
+import questions from '../data/Questions.json';
 
 type QuizProps = {
   setScore: (score: number) => void;
@@ -20,40 +20,55 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 function Quiz({ setScore, endGame }: QuizProps) {
-  // Check if there's already a saved game, or if the player is just starting the quiz
-  const savedState = localStorage.getItem('quizState'); 
-  const initialState = savedState ? JSON.parse(savedState) : { currentQuestionIndex: 0, localScore: 0 };
+  // Load full state from localStorage if available
+  const savedState = localStorage.getItem('quizState');
+  const initialState = savedState
+    ? JSON.parse(savedState)
+    : {
+        currentQuestionIndex: 0,
+        localScore: 0,
+        shuffledQuestions: shuffleArray(questions),
+      };
 
-  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialState.currentQuestionIndex);
+  // Use the saved or default shuffledQuestions
+  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>(
+    initialState.shuffledQuestions
+  );
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
+    initialState.currentQuestionIndex
+  );
 
   const [localScore, setLocalScore] = useState(initialState.localScore);
   const [answerFeedback, setAnswerFeedback] = useState<string>('');
 
+  // Only shuffle once on first mount, if there's  no saved game
   useEffect(() => {
-    const shuffled = shuffleArray(questions);
-    setShuffledQuestions(shuffled);
-    setCurrentQuestionIndex(0); // reset to first question after shuffle
-    setLocalScore(0);           // reset score on new shuffle (optional, but consistent)
-  }, []);
+    if (!savedState) {
+      const shuffled = shuffleArray(questions);
+      setShuffledQuestions(shuffled);
+      setCurrentQuestionIndex(0);
+      setLocalScore(0); 
+    }
+  }, [savedState]);
 
   useEffect(() => {
-    const gameState = { currentQuestionIndex, localScore };
-    localStorage.setItem("quizState", JSON.stringify(gameState));
-    }, [currentQuestionIndex, localScore]);
+    const gameState = { currentQuestionIndex, localScore, shuffledQuestions};
+    localStorage.setItem('quizState', JSON.stringify(gameState));
+  }, [currentQuestionIndex, localScore, shuffledQuestions]);
 
   const handleSkip = () => {
     const nextQuestionIndex = currentQuestionIndex + 1;
-      if (nextQuestionIndex < questions.length) {
-        setCurrentQuestionIndex(nextQuestionIndex);
-      }
-  }
+    if (nextQuestionIndex < questions.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+    }
+  };
 
   // Handle answer feedback and update score
   const handleAnswer = (isCorrect: boolean) => {
     if (isCorrect) {
       setLocalScore((prev: number) => prev + 1);
-      setAnswerFeedback('Correct!'); 
+      setAnswerFeedback('Correct!');
     } else {
       setAnswerFeedback('Incorrect!');
     }
@@ -71,16 +86,17 @@ function Quiz({ setScore, endGame }: QuizProps) {
   const handleExit = () => {
     setScore(localScore);
     endGame(true);
-  }
+  };
 
+  // Prevents rendering before shuffle is ready
   if (shuffledQuestions.length === 0) {
-    return <div>Loading questions...</div>
+    return <div>Loading questions...</div>;
   }
 
   return (
-    <div> 
+    <div>
       <div className="bg-[rgba(255,255,255,0.3)] px-4 py-2 rounded-lg shadow-lg max-w-720 backdrop-blur-lg">
-        <div className="score">Score: {localScore}</div>  
+        <div className="score">Score: {localScore}</div>
         <div className="counter">
           Question {currentQuestionIndex + 1} / {shuffledQuestions.length}
         </div>
@@ -91,10 +107,20 @@ function Quiz({ setScore, endGame }: QuizProps) {
       </div>
       <br />
       <div className="controls">
-        <button className="bg-[rgba(75,5,227,0.5)] rounded-sm px-4 py-1.5" onClick={handleSkip}>Skip Question</button>
-        <button className="bg-[rgba(75,5,227,0.5)] rounded-sm px-4 py-1.5" onClick={handleExit}>Exit Game</button>
+        <button
+          className="bg-[rgba(75,5,227,0.5)] rounded-sm px-4 py-1.5"
+          onClick={handleSkip}
+        >
+          Skip Question
+        </button>
+        <button
+          className="bg-[rgba(75,5,227,0.5)] rounded-sm px-4 py-1.5"
+          onClick={handleExit}
+        >
+          Exit Game
+        </button>
       </div>
-      <div className="feedback">{answerFeedback}</div> 
+      <div className="feedback">{answerFeedback}</div>
     </div>
   );
 }
