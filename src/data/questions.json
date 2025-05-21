@@ -1,218 +1,127 @@
 [
   {
-    "question": "What is the longest word in the English language?",
-    "options": [
-      "Antidisestablishmentarianism",
-      "Hippopotomonstrosesquippedaliophobia",
-      "Floccinaucinihilipilification"
-    ],
-    "answer": "Antidisestablishmentarianism"
+    "question": "Which 2000s website let you decorate your profile with glitter gifs, auto-play music, and subtle emotional damage?",
+    "options": ["Tumblr", "MySpace", "Facebook", "Bebo"],
+    "answer": "MySpace"
   },
   {
-    "question": "What is the name of the world’s smallest horse?",
-    "options": [
-      "Falabella",
-      "Shetland pony",
-      "Miniature horse"
-    ],
-    "answer": "Miniature horse"
+    "question": "What was the name of the Bratz doll known for being a fashion queen with a passion for music?",
+    "options": ["Yasmin", "Sasha", "Jade", "Cloe"],
+    "answer": "Sasha"
   },
   {
-    "question": "What is Benedictine monk Dom Pierre Pérignon rumored to have created?",
-    "options": [
-      "Tomato ketchup",
-      "Champagne",
-      "French fries"
-    ],
-    "answer": "Champagne"
+    "question": "Which animal companion in a Barbie movie literally sang opera?",
+    "options": ["Serafina", "Wolfie", "Bibble", "Lacey"],
+    "answer": "Wolfie"
   },
   {
-    "question": "Which country drinks the most amount of coffee per person?",
-    "options": [
-      "Finland",
-      "Italy",
-      "Colombia"
-    ],
-    "answer": "Finland"
-  },
-  {
-    "question": "What is the collective name for a group of unicorns?",
-    "options": [
-      "A sparkle",
-      "A spell",
-      "A blessing"
-    ],
-    "answer": "A blessing"
-  },
-  {
-    "question": "What is the most common color of toilet paper in France?",
-    "options": [
-      "Pink",
-      "White",
-      "Blue"
-    ],
+    "question": "What color was the Motorola Razr phone everyone begged for?",
+    "options": ["Pink", "Black", "Silver", "Lime Green"],
     "answer": "Pink"
   },
   {
-    "question": "How many years old is the world’s oldest piece of chewing gum?",
-    "options": [
-      "100",
-      "2,500",
-      "5,700"
-    ],
-    "answer": "5,700"
+    "question": "Which anime character screamed about friendship, cards, and destiny more than anyone else?",
+    "options": ["Yugi Mutou", "Naruto Uzumaki", "Goku", "Ash Ketchum"],
+    "answer": "Yugi Mutou"
   },
   {
-    "question": "How many times per day does the average American open their fridge?",
-    "options": [
-      "5",
-      "22",
-      "33"
-    ],
-    "answer": "33"
+    "question": "In 'Barbie Fairytopia', what was the name of the puffball sidekick who sounded like he had a sinus infection?",
+    "options": ["Hue", "Bibble", "Dibble", "Zibble"],
+    "answer": "Bibble"
   },
   {
-    "question": "What color is an airplane’s famous black box?",
-    "options": [
-      "Red",
-      "Orange",
-      "Black"
-    ],
-    "answer": "Orange"
+    "question": "What was the name of the dance mat game that caused at least three living room injuries per sleepover?",
+    "options": ["Just Dance", "DDR", "Pump It Up", "Dance Central"],
+    "answer": "DDR"
   },
   {
-    "question": "What is Bombay Duck’s main ingredient?",
-    "options": [
-      "Fish",
-      "Duck",
-      "Chicken"
-    ],
-    "answer": "Fish"
+    "question": "Which Pokémon was basically Misty’s emotionally fragile child?",
+    "options": ["Psyduck", "Togepi", "Poliwag", "Staryu"],
+    "answer": "Togepi"
   },
   {
-    "question": "What is the only letter not to appear in any U.S. state name?",
-    "options": [
-      "Q",
-      "Z",
-      "X"
-    ],
-    "answer": "Q"
+    "question": "Which 2000s social site ranked your friends publicly, causing irreversible trauma?",
+    "options": ["MySpace", "Facebook", "Hi5", "Friendster"],
+    "answer": "MySpace"
   },
   {
-    "question": "Which animal cannot jump?",
-    "options": [
-      "Elephant",
-      "Sloth",
-      "Hippo"
-    ],
-    "answer": "Elephant"
+    "question": "What snack food was commonly stored in a metal tin that later held sewing supplies?",
+    "options": ["Goldfish", "Oreos", "Danish butter cookies", "Animal crackers"],
+    "answer": "Danish butter cookies"
   },
   {
-    "question": "What is the dot over the letter 'i' called?",
-    "options": [
-      "Tittle",
-      "Nubbin",
-      "Ping"
-    ],
-    "answer": "Tittle"
+    "question": "Which anime girl had 12 magical outfits and danced her way through trauma with her sisters?",
+    "options": ["Sailor Moon", "Barbie in the 12 Dancing Princesses", "Winx Bloom", "Cardcaptor Sakura"],
+    "answer": "Barbie in the 12 Dancing Princesses"
   },
   {
-    "question": "Which country has a unicorn as its national animal?",
-    "options": [
-      "Scotland",
-      "New Zealand",
-      "Norway"
-    ],
-    "answer": "Scotland"
+    "question": "What was the go-to sick day TV channel for maximum serotonin and mild chaos?",
+    "options": ["PBS Kids", "Jetix", "Toonami", "Boomerang"],
+    "answer": "Jetix"
   },
   {
-    "question": "What is the technical term for the fear of long words?",
-    "options": [
-      "Hippopotomonstrosesquippedaliophobia",
-      "Sesquipedalophobia",
-      "Logophobia"
-    ],
-    "answer": "Hippopotomonstrosesquippedaliophobia"
+    "question": "Which magical girl anime involved throwing cards at ghosts with a small talking plushie yelling advice?",
+    "options": ["Sailor Moon", "Cardcaptor Sakura", "Pretty Cure", "Tokyo Mew Mew"],
+    "answer": "Cardcaptor Sakura"
   },
   {
-    "question": "Which fruit has its seeds on the outside?",
-    "options": [
-      "Strawberry",
-      "Kiwi",
-      "Pineapple"
-    ],
-    "answer": "Strawberry"
+    "question": "What useless feature did most flip phones have that felt revolutionary at the time?",
+    "options": ["Voice memo", "A mirror", "Infrared beaming", "Tiny antennae"],
+    "answer": "Infrared beaming"
   },
   {
-    "question": "Which planet has the most moons?",
-    "options": [
-      "Jupiter",
-      "Saturn",
-      "Mars"
-    ],
-    "answer": "Saturn"
+    "question": "What cursed sandwich did Lizzie McGuire’s brother often eat?",
+    "options": ["Peanut butter and pickles", "Tuna and marshmallows", "Liverwurst and jelly", "Cheese and mayo"],
+    "answer": "Peanut butter and pickles"
   },
   {
-    "question": "In what country would you find the ancient city of Petra?",
-    "options": [
-      "Jordan",
-      "Egypt",
-      "Greece"
-    ],
-    "answer": "Jordan"
+    "question": "Which 2000s pop artist sang with the passion of a woman wronged at junior prom?",
+    "options": ["Avril Lavigne", "Kelly Clarkson", "Ashlee Simpson", "Hilary Duff"],
+    "answer": "Kelly Clarkson"
   },
   {
-    "question": "Which animal can sleep for up to 3 years at a time?",
-    "options": [
-      "Snail",
-      "Bear",
-      "Koala"
-    ],
-    "answer": "Snail"
+    "question": "What was the forbidden Neopets activity that could get your account frozen in 0.2 seconds?",
+    "options": ["Scamming in trades", "Typing bad words", "Refreshing too much", "Feeding them weird food"],
+    "answer": "Typing bad words"
   },
   {
-    "question": "What is the name of the largest ocean on Earth?",
-    "options": [
-      "Atlantic Ocean",
-      "Indian Ocean",
-      "Pacific Ocean"
-    ],
-    "answer": "Pacific Ocean"
+    "question": "Which anime involves yelling about pirates, stretching like rubber, and eating questionable fruit?",
+    "options": ["Naruto", "One Piece", "Bleach", "Inuyasha"],
+    "answer": "One Piece"
   },
   {
-    "question": "Which vegetable is known as 'courgette' in the UK?",
-    "options": [
-      "Cucumber",
-      "Zucchini",
-      "Squash"
-    ],
-    "answer": "Zucchini"
+    "question": "Which 2000s cartoon featured a character whose entire personality was ‘extremely online’ before it was cool?",
+    "options": ["Kim Possible", "Danny Phantom", "Codename: Kids Next Door", "Totally Spies"],
+    "answer": "Totally Spies"
   },
   {
-    "question": "What is the smallest country in the world?",
-    "options": [
-      "Monaco",
-      "Vatican City",
-      "San Marino"
-    ],
-    "answer": "Vatican City"
+    "question": "Which discontinued snack was shaped like a 3D triangle and tasted like regret and cheese dust?",
+    "options": ["3D Doritos", "Bugles", "Combos", "Pizza Rolls"],
+    "answer": "3D Doritos"
   },
   {
-    "question": "Which element has the chemical symbol 'O'?",
-    "options": [
-      "Oxygen",
-      "Osmium",
-      "Ozone"
-    ],
-    "answer": "Oxygen"
+    "question": "Which anime gave every 12-year-old an identity crisis about destiny, power, and eyeliner?",
+    "options": ["Bleach", "Naruto", "Death Note", "Yu-Gi-Oh!"],
+    "answer": "Naruto"
   },
   {
-    "question": "Which bird is known for its colorful tail feathers and ability to mimic sounds?",
-    "options": [
-      "Parrot",
-      "Peacock",
-      "Penguin"
-    ],
-    "answer": "Parrot"
+    "question": "What was the name of the Barbie movie where she had to attend princess bootcamp?",
+    "options": ["Princess Charm School", "Island Princess", "Fairytopia", "Magic of Pegasus"],
+    "answer": "Princess Charm School"
+  },
+  {
+    "question": "Which plastic cat meme appeared in rainbow trail form and had a theme song that lives in your nightmares?",
+    "options": ["Nyan Cat", "Grumpy Cat", "Pusheen", "Keyboard Cat"],
+    "answer": "Nyan Cat"
+  },
+  {
+    "question": "What terrifying talking feline tried to sell you grammar skills in the early 2000s?",
+    "options": ["WordGirl", "Binky the Cat", "MeowMix Cat", "SmartyCat from Muzzy"],
+    "answer": "SmartyCat from Muzzy"
+  },
+  {
+    "question": "What is the name of the Japanese animation studio responsible for emotionally destroying you via flying pigs and soot sprites?",
+    "options": ["Toei Animation", "Studio Ghibli", "Bones", "Sunrise"],
+    "answer": "Studio Ghibli"
   }
 ]

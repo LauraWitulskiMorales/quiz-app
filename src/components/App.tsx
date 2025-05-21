@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Quiz from "./Quiz";
 import Result from "./Result";
-import "../styles/App.css";
+import "../styles/index.css";
 import questions from "../data/Questions.json";
 
 function App() {
