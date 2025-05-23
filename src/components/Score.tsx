@@ -1,3 +1,5 @@
+// Shows current score
+
 import React from 'react';
 
 interface ScoreProps {

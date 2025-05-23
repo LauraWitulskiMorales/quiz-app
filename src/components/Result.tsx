@@ -1,10 +1,14 @@
+//Result screen that is rendered when the game ends
+
+import { StyledButton } from './Buttons'; // imports the button styling
+
 interface ResultProps {
   score: number;
   totalQuestions: number;
   onReturnToStart: () => void;
 }
 
-function Result ({ score, totalQuestions, onReturnToStart }: ResultProps) {
+function Result({ score, totalQuestions, onReturnToStart }: ResultProps) {
   return (
     <div className="result-container">
       <h2>Quiz Finished!</h2>
@@ -12,9 +16,10 @@ function Result ({ score, totalQuestions, onReturnToStart }: ResultProps) {
         You scored {score} out of {totalQuestions}.
       </p>
       <p>{score === totalQuestions ? 'Perfect!' : 'Good try!'}</p>
-      <button onClick={onReturnToStart}>Return to Start</button>
+      <br />
+      <StyledButton onClick={onReturnToStart}>Return to Start</StyledButton>
     </div>
   );
-};
+}
 
 export default Result;

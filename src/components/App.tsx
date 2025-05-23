@@ -1,23 +1,33 @@
-import { useEffect, useState } from "react";
-import Quiz from "./Quiz";
-import Result from "./Result";
-import "../styles/index.css";
-import questions from "../data/Questions.json";
+// This file is the main component, which controls the game process (e.g. starting and ending the game)
+
+import { useEffect, useState } from 'react';
+import Quiz from './Quiz';
+import Result from './Result';
+import '../styles/index.css';
+import questions from '../data/Questions.json';
+import { StyledButton } from './Buttons';
+
 
 function App() {
-  const savedState = localStorage.getItem('quizState');
-  const initialState = savedState ? JSON.parse(savedState) : { currentQuestionIndex: 0, localScore: 0 };
-
   const [gameStarted, setGameStarted] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOptionsVisible, setGameOptionsVisible] = useState(false);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialState.currentQuestionIndex);
 
+  // Read the saved quizState from localStorage
   useEffect(() => {
     const savedState = localStorage.getItem('quizState');
     if (savedState) {
-      setGameOptionsVisible(true); 
+      setGameOptionsVisible(true);
+
+      const parsedState = JSON.parse(savedState);
+      if (parsedState && typeof parsedState.currentQuestionIndex === 'number') {
+        setCurrentQuestionIndex(parsedState.currentQuestionIndex);
+      }
+      if (parsedState && typeof parsedState.localScore === 'number') {
+        setScore(parsedState.localScore);
+      }
     }
   }, []);
 
@@ -26,68 +36,63 @@ function App() {
     setScore(0);
     setShowResult(false);
     setGameOptionsVisible(false);
-    setCurrentQuestionIndex(0);
   };
 
-  const handleEndOrExit = (userExit: boolean = false) => {
-      if (userExit) {
-        setShowResult(true);
-        setGameStarted(false);
-        setGameOptionsVisible(false);
-        localStorage.removeItem('quizState');
-      }
-  }
+  const handleEnd = () => {
+    setShowResult(true);
+    setGameStarted(false);
+    setGameOptionsVisible(false);
+    localStorage.removeItem('quizState');
+  };
 
   const continueGame = () => {
     setGameOptionsVisible(false);
     setGameStarted(true);
-  }
+  };
 
   const restartGame = () => {
     localStorage.removeItem('quizState');
     setScore(0);
     setGameStarted(true);
     setGameOptionsVisible(false);
-    setCurrentQuestionIndex(0);
-  }
+  };
 
   const goToStartScreen = () => {
-        setGameStarted(false);
-        setShowResult(false);
-        setGameOptionsVisible(false);
-        setScore(0);
-        
-  }
-
+    setGameStarted(false);
+    setShowResult(false);
+    setGameOptionsVisible(false);
+    setScore(0);
+  };
 
   return (
     <div className="app-container">
-
-{gameOptionsVisible && !gameStarted && !showResult && (
-      <div className="game-options">
-        <p>Score: {score}</p>
-        <p>Question: {currentQuestionIndex + 1} / {questions.length} </p>
-      <button onClick={continueGame}>Continue Game</button>
-          <button onClick={restartGame}>Restart Game</button>
-          <button onClick={() => handleEndOrExit(true)}>Exit Game</button>
-      </div>
-)}
+      {gameOptionsVisible && !gameStarted && !showResult && (
+        <div className="game-options">
+          <p>Score: {score}</p>
+          <p>
+            Question: {currentQuestionIndex + 1} / {questions.length}{' '}
+          </p>
+          <StyledButton onClick={continueGame}>Continue Game</StyledButton>
+          <StyledButton onClick={restartGame}>Restart Game</StyledButton>
+          <StyledButton onClick={handleEnd}>Exit Game</StyledButton>
+        </div>
+      )}
 
       {!gameStarted && !gameOptionsVisible && !showResult && (
-        <button onClick={startGame}>Start Quiz</button>
+        <StyledButton onClick={startGame}>Start Quiz</StyledButton>
       )}
       {gameStarted && !showResult && (
-        <Quiz setScore={setScore} endGame={handleEndOrExit} />
+        <Quiz setScore={setScore} endGame={handleEnd} />
       )}
 
       {showResult && (
-        <Result 
-        score={score} 
-        totalQuestions={questions.length} 
-        onReturnToStart={goToStartScreen} 
+        <Result
+          score={score}
+          totalQuestions={questions.length}
+          onReturnToStart={goToStartScreen}
         />
       )}
-        </div>
+    </div>
   );
 }
 
