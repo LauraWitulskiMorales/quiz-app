@@ -6,7 +6,9 @@ import Result from './Result';
 import '../styles/index.css';
 import questions from '../data/Questions.json';
 import { StyledButton } from './Buttons';
-
+import { Progress } from '@/components/ui/progress';
+import haraldImage from '../assets/harald.png';
+import { Card } from './Card';
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -64,33 +66,47 @@ function App() {
     setScore(0);
   };
 
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+
   return (
     <div className="app-container">
       {gameOptionsVisible && !gameStarted && !showResult && (
-        <div className="game-options">
-          <p>Score: {score}</p>
+        <div>
           <p>
-            Question: {currentQuestionIndex + 1} / {questions.length}{' '}
+            <Progress value={progress} className="h-2" />
           </p>
-          <StyledButton onClick={continueGame}>Continue Game</StyledButton>
-          <StyledButton onClick={restartGame}>Restart Game</StyledButton>
-          <StyledButton onClick={handleEnd}>Exit Game</StyledButton>
+          <br />
+          <Card score={score}>
+            <div>
+              <img src={haraldImage} alt="harald" />
+            </div>
+            <div className="game-options">
+              <StyledButton onClick={continueGame}>Continue Game</StyledButton>
+              <StyledButton onClick={restartGame}>Restart Game</StyledButton>
+              <StyledButton onClick={handleEnd}>Exit Game</StyledButton>
+            </div>
+          </Card>
         </div>
       )}
 
       {!gameStarted && !gameOptionsVisible && !showResult && (
-        <StyledButton onClick={startGame}>Start Quiz</StyledButton>
+        <Card>
+          <StyledButton onClick={startGame}>Start Quiz</StyledButton>
+        </Card>
       )}
+
       {gameStarted && !showResult && (
-        <Quiz setScore={setScore} endGame={handleEnd} />
+          <Quiz setScore={setScore} endGame={handleEnd} />
       )}
 
       {showResult && (
-        <Result
-          score={score}
-          totalQuestions={questions.length}
-          onReturnToStart={goToStartScreen}
-        />
+        <Card>
+          <Result
+            score={score}
+            totalQuestions={questions.length}
+            onReturnToStart={goToStartScreen}
+          />
+        </Card>
       )}
     </div>
   );

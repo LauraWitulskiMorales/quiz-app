@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import Question from './Question';
 import questions from '../data/Questions.json';
 import { StyledButton } from './Buttons';
+import { Progress } from '@/components/ui/progress';
+import { Card } from './Card';
 
 type EndReason = 'completed' | 'timeout' | 'out-of-lives' | 'exit';
 
@@ -64,19 +66,19 @@ function Quiz({ setScore, endGame }: QuizProps) {
   //
 
   //30s timer which automatically ends the game if the user runs out of time > separate file
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimer((prev) => prev - 1)
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, [currentQuestionIndex])
+  // useEffect(() => {
+  //   const countdown = setInterval(() => {
+  //     setTimer((prev) => prev - 1)
+  //   }, 1000);
+  //   return () => clearInterval(countdown);
+  // }, [currentQuestionIndex])
 
-  useEffect(() => {
-    if (timer <= 0) {
-      setScore(localScore);
-      endGame('timeout');
-    }
-  }, [timer, localScore, setScore, endGame]);
+  // useEffect(() => {
+  //   if (timer <= 0) {
+  //     setScore(localScore);
+  //     endGame('timeout');
+  //   }
+  // }, [timer, localScore, setScore, endGame]);
   //
 
   const handleSkip = () => {
@@ -84,6 +86,8 @@ function Quiz({ setScore, endGame }: QuizProps) {
     if (nextQuestionIndex < questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
       setTimer(30);
+    } else {
+      endGame('completed');
     }
   };
 
@@ -97,25 +101,28 @@ function Quiz({ setScore, endGame }: QuizProps) {
   };
 
   const handleNext = () => {
-      // move on to next question and end game if it was the last question
+    // move on to next question and end game if it was the last question
     const nextIndex = currentQuestionIndex + 1;
-      if (nextIndex < shuffledQuestions.length && lives > 1) {
-        setCurrentQuestionIndex(nextIndex);
-        setTimer(30);
+    if (nextIndex < shuffledQuestions.length && lives > 1) {
+      setCurrentQuestionIndex(nextIndex);
+      setTimer(30);
+    } else {
+      setScore(localScore);
+      if (lives <= 1) {
+        endGame('out-of-lives');
       } else {
-        setScore(localScore);
-        if (lives <= 1) {
-          endGame('out-of-lives');
-        } else {
-          endGame('completed');
-        }
+        endGame('completed');
       }
+    }
   };
 
   const handleExit = () => {
     setScore(localScore);
     endGame('exit');
   };
+
+  const progress =
+    ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
 
   // Prevents rendering before shuffle is ready
   if (shuffledQuestions.length === 0) {
@@ -124,25 +131,26 @@ function Quiz({ setScore, endGame }: QuizProps) {
 
   return (
     <div>
-      <div>⏱️{timer}</div>
       <div className="py-5 scale-200">{'🩷'.repeat(lives)}</div>
-      <div className="bg-[rgba(255,255,255,0.25)] px-4 py-2 rounded-xl shadow-xl max-w-720 backdrop-blur-xs h-100">
-        <div className="score">Score: {localScore}</div>
-        <div className="counter">
-          Question {currentQuestionIndex + 1} / {shuffledQuestions.length}
-        </div>
+      <div className="counter">
+        <span>{currentQuestionIndex + 1} / {shuffledQuestions.length}</span>
+        <Progress value={progress} className="h-3 border border-black" />
+        <br />
+        
+      </div>
+      <Card score={localScore}>
         <Question
+          key={currentQuestionIndex}
           question={shuffledQuestions[currentQuestionIndex]}
           onAnswer={handleAnswer}
           onNext={handleNext}
         />
-      </div>
-      <br />
-      <div className="controls">
+      </Card>
+      <div className="controls justify-center">
         <StyledButton onClick={handleSkip}>Skip Question</StyledButton>
         <StyledButton onClick={handleExit}>Exit Game</StyledButton>
       </div>
-      {/* <div className="feedback">{answerFeedback}</div> */}
+      <div>⏱️{timer}</div>
     </div>
   );
 }
