@@ -1,39 +1,63 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from 'react';
+import closeIcon from '../assets/close.png';
+import maximizeIcon from '../assets/maximise.png';
+import minimizeIcon from '../assets/minimize.png';
 
 type CardProps = {
-    score?: number;
-    height?: string;
-    innerHeight?: string;
-    className?: string;
-    style?: CSSProperties;
-    children: ReactNode;
+  score?: number;
+  height?: string;
+  innerHeight?: string;
+  className?: string;
+  style?: CSSProperties;
+  children: ReactNode;
 };
 
-export function Card ({
-    score,
-    height = 'max-h-130',
-    innerHeight = 'max-h-110',
-    className = '',
-    style,
-    children,
+export function Card({
+  score,
+  height = 'max-h-140',
+  innerHeight = 'max-h-120',
+  className = '',
+  style,
+  children,
 }: CardProps) {
-    return (
-        <div
-      className={`relative bg-[rgba(255,255,255,0.25)] rounded-xl shadow-xl max-w-200 ${height} backdrop-blur-xs border border-gray-600 ${className}`}
+  return (
+    <div
+      className={`relative bg-[rgba(255,255,255,0.25)] rounded-md shadow-xl max-w-200 ${height} backdrop-blur-xs border border-gray-600 ${className}`}
       style={{ background: 'var(--window-background-glass-stripes)', ...style }}
     >
-      <div className="arial left-0 px-4 py-3 h-10 border-b border-white/30 rounded-t-xl select-none">
-        {score !== undefined && <>Score: {score}</>}
-        <button className="bg-[url(../assets/minimize.png)]">
-        </button>
-        <button></button>
-        <button></button>
+      <div className="arial flex justify-between items-center h-10 border-b border-white/30 rounded-t-xl select-none">
+        <div className="ml-4">{score !== undefined && <>Score: {score}</>}</div>
+
+        <div className="flex mr-2 mt-[-21px]">
+          <button
+            style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`,}}
+            className="card-button-gradient flex items-center justify-center w-[32px] h-[20px] rounded-bl-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
+          >
+            <img src={minimizeIcon} alt="minimize" className='w-[11px] h-[5px]' />
+          </button>
+          <button
+            style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`, }}
+            className="card-button-gradient flex items-center justify-center w-[32px] h-[20px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
+          >
+            <img src={maximizeIcon} alt="maximize" className='w-[11px] h-[10px]' />
+          </button>
+          <button
+            style={{
+              backgroundImage: `radial-gradient(circle at -60% 50%, #0007 5% 10%, #0000 50%), radial-gradient(circle at 160% 50%, #0007 5% 10%, #0000 50%), linear-gradient(#e0a197e5, #cf796a 25% 50%, #d54f36 50%)`,
+            }}
+            className="card-button-gradient-close flex items-center justify-center w-[45px] h-[20px] rounded-br-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
+          >
+            <img src={closeIcon} alt="close" className="w-[11px] h-[10px]" />
+          </button>
+        </div>
       </div>
 
       {/* Inner white shell for page content */}
-      <div className={`bg-[rgba(255,255,255,1)] px-4 py-4 max-w-3xl ${innerHeight} m-2 border border-black overflow-y-auto`}>
+      <div
+        className={`bg-[rgba(255,255,255,1)] px-4 py-4 max-w-3xl ${innerHeight} m-2 border border-black overflow-y-auto overflow-hidden`}
+      >
         {children}
       </div>
     </div>
-    );
+  );
 }

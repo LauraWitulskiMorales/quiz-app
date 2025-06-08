@@ -1,11 +1,11 @@
 // This file manages question logic and answer processing
 
+import { Progress } from '@/components/ui/progress';
 import { useEffect, useState } from 'react';
-import Question from './Question';
 import questions from '../data/Questions.json';
 import { StyledButton } from './Buttons';
-import { Progress } from '@/components/ui/progress';
 import { Card } from './Card';
+import Question from './Question';
 
 type EndReason = 'completed' | 'timeout' | 'out-of-lives' | 'exit';
 
@@ -32,6 +32,7 @@ function Quiz({ setScore, endGame }: QuizProps) {
     : {
         currentQuestionIndex: 0,
         localScore: 0,
+        lives: 5,
         shuffledQuestions: shuffleArray(questions),
       };
 
@@ -45,7 +46,7 @@ function Quiz({ setScore, endGame }: QuizProps) {
   );
 
   const [localScore, setLocalScore] = useState(initialState.localScore);
-  const [lives, setLives] = useState(5);
+  const [lives, setLives] = useState(initialState.lives);
   const [timer, setTimer] = useState(30);
 
   // Only shuffle once on first mount, if there's  no saved game > potentially separate file
@@ -55,14 +56,15 @@ function Quiz({ setScore, endGame }: QuizProps) {
       setShuffledQuestions(shuffled);
       setCurrentQuestionIndex(0);
       setLocalScore(0);
+      setLives(5)
     }
   }, [savedState]);
 
   //save game stats to Local Storage
   useEffect(() => {
-    const gameState = { currentQuestionIndex, localScore, shuffledQuestions };
+    const gameState = { currentQuestionIndex, localScore, lives, shuffledQuestions };
     localStorage.setItem('quizState', JSON.stringify(gameState));
-  }, [currentQuestionIndex, localScore, shuffledQuestions]);
+  }, [currentQuestionIndex, localScore, lives, shuffledQuestions]);
   //
 
   //30s timer which automatically ends the game if the user runs out of time > separate file
@@ -103,12 +105,12 @@ function Quiz({ setScore, endGame }: QuizProps) {
   const handleNext = () => {
     // move on to next question and end game if it was the last question
     const nextIndex = currentQuestionIndex + 1;
-    if (nextIndex < shuffledQuestions.length && lives > 1) {
+    if (nextIndex < shuffledQuestions.length && lives >= 1) {
       setCurrentQuestionIndex(nextIndex);
       setTimer(30);
     } else {
       setScore(localScore);
-      if (lives <= 1) {
+      if (lives < 1) {
         endGame('out-of-lives');
       } else {
         endGame('completed');
@@ -131,7 +133,6 @@ function Quiz({ setScore, endGame }: QuizProps) {
 
   return (
     <div>
-      <div className="py-5 scale-200">{'🩷'.repeat(lives)}</div>
       <div className="counter">
         <span>{currentQuestionIndex + 1} / {shuffledQuestions.length}</span>
         <Progress value={progress} className="h-3 border border-black" />
@@ -139,6 +140,7 @@ function Quiz({ setScore, endGame }: QuizProps) {
         
       </div>
       <Card score={localScore}>
+        <div className="py-5 scale-200">{'🩷'.repeat(lives)}</div>
         <Question
           key={currentQuestionIndex}
           question={shuffledQuestions[currentQuestionIndex]}
