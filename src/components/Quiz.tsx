@@ -1,8 +1,8 @@
 // This file manages question logic and answer processing
 
 import { Progress } from '@/components/ui/progress';
+import { useQuizState } from '../hooks/useGameState';
 import { useEffect, useState } from 'react';
-import questions from '../data/Questions.json';
 import { StyledButton } from './Buttons';
 import { Card } from './Card';
 import Question from './Question';
@@ -12,60 +12,29 @@ type EndReason = 'completed' | 'timeout' | 'out-of-lives' | 'exit';
 type QuizProps = {
   setScore: (score: number) => void;
   endGame: (reason: EndReason) => void;
+  pauseGame: () => void;
 };
 
-// Shuffle Questions
-function shuffleArray<T>(array: T[]): T[] {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
-}
+function Quiz({ setScore, endGame, pauseGame }: QuizProps) {
+  const {
+    quizState: { score, lives, currentQuestionIndex, shuffledQuestions, totalQuestions },
+    incrementScore,
+    loseLife,
+    nextQuestion,
+  } = useQuizState();
 
-function Quiz({ setScore, endGame }: QuizProps) {
-  // Load full state from localStorage if available
-  const savedState = localStorage.getItem('quizState');
-  const initialState = savedState
-    ? JSON.parse(savedState)
-    : {
-        currentQuestionIndex: 0,
-        localScore: 0,
-        lives: 5,
-        shuffledQuestions: shuffleArray(questions),
-      };
+  const currentIndex = currentQuestionIndex;
+  const isLastQuestion = currentIndex + 1 >= totalQuestions;
+  const [shouldPause, setShouldPause] = useState(false);
 
-  // Use the saved or default shuffledQuestions
-  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>(
-    initialState.shuffledQuestions
-  );
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
-    initialState.currentQuestionIndex
-  );
-
-  const [localScore, setLocalScore] = useState(initialState.localScore);
-  const [lives, setLives] = useState(initialState.lives);
-  const [timer, setTimer] = useState(30);
-
-  // Only shuffle once on first mount, if there's  no saved game > potentially separate file
   useEffect(() => {
-    if (!savedState) {
-      const shuffled = shuffleArray(questions);
-      setShuffledQuestions(shuffled);
-      setCurrentQuestionIndex(0);
-      setLocalScore(0);
-      setLives(5)
+    if (shouldPause) {
+      pauseGame();
+      setShouldPause(false); // reset the flag
     }
-  }, [savedState]);
+  }, [shouldPause, lives]); // make sure it re-runs when lives update
 
-  //save game stats to Local Storage
-  useEffect(() => {
-    const gameState = { currentQuestionIndex, localScore, lives, shuffledQuestions };
-    localStorage.setItem('quizState', JSON.stringify(gameState));
-  }, [currentQuestionIndex, localScore, lives, shuffledQuestions]);
-  //
 
   //30s timer which automatically ends the game if the user runs out of time > separate file
   // useEffect(() => {
@@ -84,10 +53,9 @@ function Quiz({ setScore, endGame }: QuizProps) {
   //
 
   const handleSkip = () => {
-    const nextQuestionIndex = currentQuestionIndex + 1;
-    if (nextQuestionIndex < questions.length) {
-      setCurrentQuestionIndex(nextQuestionIndex);
-      setTimer(30);
+    if (!isLastQuestion) {
+      nextQuestion();
+      // setTimer(30);
     } else {
       endGame('completed');
     }
@@ -96,63 +64,61 @@ function Quiz({ setScore, endGame }: QuizProps) {
   // Handle answer feedback and update score
   const handleAnswer = (isCorrect: boolean) => {
     if (isCorrect === true) {
-      setLocalScore((prev: number) => prev + 1);
+      incrementScore(1);
     } else if (isCorrect === false) {
-      setLives((prev: number) => prev - 1);
+      loseLife();
     }
   };
 
   const handleNext = () => {
     // move on to next question and end game if it was the last question
-    const nextIndex = currentQuestionIndex + 1;
-    if (nextIndex < shuffledQuestions.length && lives >= 1) {
-      setCurrentQuestionIndex(nextIndex);
-      setTimer(30);
+    if (!isLastQuestion && lives >= 1) {
+      nextQuestion();
+      // setTimer(30);
     } else {
-      setScore(localScore);
-      if (lives < 1) {
-        endGame('out-of-lives');
-      } else {
-        endGame('completed');
-      }
+      setScore(score);
+      endGame(lives < 1 ? 'out-of-lives' : 'completed');
     }
   };
 
   const handleExit = () => {
-    setScore(localScore);
+    setScore(score);
     endGame('exit');
   };
 
   const progress =
-    ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
+    ((currentIndex + 1) / totalQuestions) * 100;
 
   // Prevents rendering before shuffle is ready
-  if (shuffledQuestions.length === 0) {
+  if (totalQuestions === 0) {
     return <div>Loading questions...</div>;
   }
 
   return (
     <div>
       <div className="counter">
-        <span>{currentQuestionIndex + 1} / {shuffledQuestions.length}</span>
+        <span>{currentIndex + 1} / {totalQuestions}</span>
         <Progress value={progress} className="h-3 border border-black" />
         <br />
-        
       </div>
-      <Card score={localScore}>
+      <Card score={score} lives={lives}>
         <div className="py-5 scale-200">{'🩷'.repeat(lives)}</div>
         <Question
-          key={currentQuestionIndex}
-          question={shuffledQuestions[currentQuestionIndex]}
+          key={currentIndex}
+          question={shuffledQuestions[currentIndex]}
           onAnswer={handleAnswer}
           onNext={handleNext}
         />
       </Card>
       <div className="controls justify-center">
         <StyledButton onClick={handleSkip}>Skip Question</StyledButton>
+        <StyledButton onClick={() => setShouldPause(true)}>
+          Pause Game
+        </StyledButton>
+
         <StyledButton onClick={handleExit}>Exit Game</StyledButton>
       </div>
-      <div>⏱️{timer}</div>
+      {/* <div>⏱️{timer}</div> */}
     </div>
   );
 }

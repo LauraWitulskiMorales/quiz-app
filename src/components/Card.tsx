@@ -2,9 +2,11 @@ import type { CSSProperties, ReactNode } from 'react';
 import closeIcon from '../assets/close.png';
 import maximizeIcon from '../assets/maximise.png';
 import minimizeIcon from '../assets/minimize.png';
+// import { useQuizState } from '../hooks/useGameState';
 
 type CardProps = {
-  score?: number;
+  score?: number
+  lives?: number
   height?: string;
   innerHeight?: string;
   className?: string;
@@ -14,8 +16,9 @@ type CardProps = {
 
 export function Card({
   score,
-  height = 'max-h-140',
-  innerHeight = 'max-h-120',
+  lives = 0,
+  height = 'max-h-150',
+  innerHeight = 'max-h-130',
   className = '',
   style,
   children,
@@ -26,11 +29,11 @@ export function Card({
       style={{ background: 'var(--window-background-glass-stripes)', ...style }}
     >
       <div className="arial flex justify-between items-center h-10 border-b border-white/30 rounded-t-xl select-none">
-        <div className="ml-4">{score !== undefined && <>Score: {score}</>}</div>
-
+        <div className="ml-4">{typeof score !== 'undefined' && `Score: ${score}`}</div>
+        <span className="lives-display">{'🩷'.repeat(lives)}</span>
         <div className="flex mr-2 mt-[-21px]">
           <button
-            style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`,}}
+            style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`, }}
             className="card-button-gradient flex items-center justify-center w-[32px] h-[20px] rounded-bl-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
           >
             <img src={minimizeIcon} alt="minimize" className='w-[11px] h-[5px]' />
