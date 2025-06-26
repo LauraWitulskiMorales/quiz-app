@@ -2,20 +2,23 @@
 
 import { Progress } from '@/components/ui/progress';
 import { useQuizState } from '../hooks/useGameState';
+import { useTimer } from '../hooks/useTimer';
 import { useEffect, useState } from 'react';
-import { StyledButton } from './Buttons';
-import { Card } from './Card';
+import { StyledButton } from './ui/Buttons';
+import { Card } from './ui/Card';
 import Question from './Question';
-
-type EndReason = 'completed' | 'timeout' | 'out-of-lives' | 'exit';
+import { EndReason } from '../lib/types';
 
 type QuizProps = {
   setScore: (score: number) => void;
   endGame: (reason: EndReason) => void;
+  startGame: () => void;
   pauseGame: () => void;
+  timeLeft: number;
+  resetTimer: () => void;
 };
 
-function Quiz({ setScore, endGame, pauseGame }: QuizProps) {
+function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }: QuizProps) {
   const {
     quizState: { score, lives, currentQuestionIndex, shuffledQuestions, totalQuestions },
     incrementScore,
@@ -31,33 +34,18 @@ function Quiz({ setScore, endGame, pauseGame }: QuizProps) {
   useEffect(() => {
     if (shouldPause) {
       pauseGame();
-      setShouldPause(false); // reset the flag
+      setShouldPause(false);
     }
   }, [shouldPause, lives]); // make sure it re-runs when lives update
-
-
-  //30s timer which automatically ends the game if the user runs out of time > separate file
-  // useEffect(() => {
-  //   const countdown = setInterval(() => {
-  //     setTimer((prev) => prev - 1)
-  //   }, 1000);
-  //   return () => clearInterval(countdown);
-  // }, [currentQuestionIndex])
-
-  // useEffect(() => {
-  //   if (timer <= 0) {
-  //     setScore(localScore);
-  //     endGame('timeout');
-  //   }
-  // }, [timer, localScore, setScore, endGame]);
-  //
 
   const handleSkip = () => {
     if (!isLastQuestion) {
       nextQuestion();
-      // setTimer(30);
+      resetTimer();
+      startGame();
     } else {
       endGame('completed');
+      resetTimer();
     }
   };
 
@@ -74,16 +62,26 @@ function Quiz({ setScore, endGame, pauseGame }: QuizProps) {
     // move on to next question and end game if it was the last question
     if (!isLastQuestion && lives >= 1) {
       nextQuestion();
-      // setTimer(30);
+      resetTimer();
+      startGame();
+    } else if (timeLeft === 0) {
+      setScore(score);
+      endGame('timeout');
+      resetTimer();
     } else {
       setScore(score);
       endGame(lives < 1 ? 'out-of-lives' : 'completed');
+      resetTimer();
+      startGame();
     }
+    console.log(useTimer);
   };
 
   const handleExit = () => {
     setScore(score);
     endGame('exit');
+    resetTimer();
+    startGame()
   };
 
   const progress =
@@ -102,7 +100,6 @@ function Quiz({ setScore, endGame, pauseGame }: QuizProps) {
         <br />
       </div>
       <Card score={score} lives={lives}>
-        <div className="py-5 scale-200">{'🩷'.repeat(lives)}</div>
         <Question
           key={currentIndex}
           question={shuffledQuestions[currentIndex]}
@@ -118,7 +115,7 @@ function Quiz({ setScore, endGame, pauseGame }: QuizProps) {
 
         <StyledButton onClick={handleExit}>Exit Game</StyledButton>
       </div>
-      {/* <div>⏱️{timer}</div> */}
+      <div>⏱️{timeLeft}</div>
     </div>
   );
 }

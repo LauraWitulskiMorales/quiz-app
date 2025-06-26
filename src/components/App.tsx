@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react';
 import haraldImage from '../assets/harald.png';
 import questions from '../data/Questions.json';
 import '../styles/index.css';
-import { StyledButton } from './Buttons';
-import { Card } from './Card';
+import { StyledButton } from './ui/Buttons';
+import { Card } from './ui/Card';
 import Quiz from './Quiz';
 import Result from './Result';
 import { useQuizState } from '../hooks/useGameState';
+import { useTimer } from '../hooks/useTimer';
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -23,6 +24,16 @@ function App() {
     clearSavedQuiz,
     reset,
   } = useQuizState();
+
+  const {
+    timeLeft,
+    start: startTimer,
+    pause: pauseTimer,
+    reset: resetTimer
+  } = useTimer({
+    duration: 30,
+    onTimeout: () => handleEnd(),
+  });
 
   const hasSavedGame =
     quizState &&
@@ -38,8 +49,8 @@ function App() {
     setShowResult(false);
     setGameOptionsVisible(false);
     setIsPaused(false);
-
-    reset();
+    resetTimer()
+    startTimer();
   };
 
   const setScore = (finalScore: number) => {
@@ -50,9 +61,12 @@ function App() {
     setGameOptionsVisible(true);
     setIsPaused(true);
     setGameStarted(false);
+    pauseTimer();
+    console.log('⏸ Game paused');
   }
 
   const handleEnd = () => {
+    ;
     setShowResult(true);
     setGameStarted(false);
     setGameOptionsVisible(false);
@@ -64,13 +78,17 @@ function App() {
     setGameOptionsVisible(false);
     setGameStarted(true);
     setIsPaused(false);
+    startTimer();
   };
 
   const restartGame = () => {
+    console.log('🔁 Restarting game');
     clearSavedQuiz();
     setGameStarted(true);
     setIsPaused(false);
-    setGameOptionsVisible(false);
+    setGameOptionsVisible(false)
+    resetTimer();
+    startTimer();
 
     reset();
   };
@@ -88,7 +106,8 @@ function App() {
     if (hasSavedGame) {
       setIsPaused(true);
       setGameOptionsVisible(true);
-      setGameStarted(false); // This ensures we show the pause screen
+      setGameStarted(false);
+      // This ensures we show the pause screen
     }
   }, [hasSavedGame]);
 
@@ -104,7 +123,6 @@ function App() {
           </div>
           <br />
           <Card>
-            {/* <div className="py-5 scale-200">{'🩷'.repeat(lives)}</div> */}
             <div className='flex justify-center'>
               <img src={haraldImage} alt="harald" className="shake" />
             </div>
@@ -127,7 +145,10 @@ function App() {
         <Quiz
           setScore={setScore}
           endGame={handleEnd}
+          startGame={startGame}
           pauseGame={pauseGame}
+          timeLeft={timeLeft}
+          resetTimer={resetTimer}
         />
       )}
 
