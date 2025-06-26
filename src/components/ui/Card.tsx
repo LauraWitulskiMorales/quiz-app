@@ -1,8 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
-import closeIcon from '../assets/close.png';
-import maximizeIcon from '../assets/maximise.png';
-import minimizeIcon from '../assets/minimize.png';
-// import { useQuizState } from '../hooks/useGameState';
+import closeIcon from '../../assets/close.png';
+import maximizeIcon from '../../assets/maximise.png';
+import minimizeIcon from '../../assets/minimize.png';
 
 type CardProps = {
   score?: number

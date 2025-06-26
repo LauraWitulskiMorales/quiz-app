@@ -1,7 +1,7 @@
 //Result screen that is rendered when the game ends
 
-import { StyledButton } from './Buttons';
-import { useQuizState } from '../hooks/useGameState';
+import { StyledButton } from './ui/Buttons';
+import { useQuizState } from '../hooks/UseGameState';
 
 interface ResultProps {
   onReturnToStart: () => void;

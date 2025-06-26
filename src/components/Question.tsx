@@ -1,18 +1,20 @@
 // This file renders individual questions and answer options
 import React, { useState } from 'react';
 import '../styles/index.css';
-import { StyledButton } from './Buttons';
+import { StyledButton } from './ui/Buttons';
+import type { QuestionProps } from '../lib/types';
+
 
 // define what Props each question is supposed to contain
-interface QuestionProps {
-  question: {
-    question: string;
-    options: string[];
-    answer: string;
-  };
-  onAnswer: (isCorrect: boolean) => void;
-  onNext: () => void;
-}
+// type QuestionProps = {
+//   question: {
+//     question: string;
+//     options: string[];
+//     answer: string;
+//   };
+//   onAnswer: (isCorrect: boolean) => void;
+//   onNext: () => void;
+// }
 
 const Question: React.FC<QuestionProps> = ({ question, onAnswer, onNext }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
