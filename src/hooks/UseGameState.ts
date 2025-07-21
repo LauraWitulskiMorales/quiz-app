@@ -24,7 +24,7 @@ export function useQuizState() {
   }
 
   function clearSavedQuiz() {
-    localStorage.removeItem('quizState')
+    sessionStorage.removeItem('quizState')
   }
 
   function reset() {

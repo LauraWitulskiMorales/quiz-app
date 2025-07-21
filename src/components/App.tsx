@@ -1,30 +1,18 @@
 // This file is the main component, which controls the game process (e.g. starting and ending the game)
 
-import { Progress } from '@/components/ui/progress';
-import { useEffect, useState } from 'react';
-import haraldImage from '../assets/harald.png';
-import questions from '../data/Questions.json';
-import '../styles/index.css';
-import { StyledButton } from './ui/Buttons';
-import { Card } from './ui/Card';
-import Quiz from './Quiz';
-import Result from './Result';
-import { useQuizState } from '../hooks/useGameState';
+import { useContext } from 'react';
+import { QuizContext } from '../context/QuizContext';
 import { useTimer } from '../hooks/useTimer';
+import Quiz from './Quiz';
+import PauseScreen from './ui/pauseScreen';
+import StartScreen from './ui/startScreen';
+import ResultScreen from './ui/resultScreen';
+import { shuffleArray } from '../lib/utils';
+import questions from '../data/Questions.json';
+
 
 function App() {
-  const [gameStarted, setGameStarted] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [showResult, setShowResult] = useState(false);
-  const [gameOptionsVisible, setGameOptionsVisible] = useState(false);
-
-  const {
-    quizState,
-    setQuizState,
-    clearSavedQuiz,
-    reset,
-  } = useQuizState();
-
+  const quizContext = useContext(QuizContext);
   const {
     timeLeft,
     start: startTimer,
@@ -35,21 +23,17 @@ function App() {
     onTimeout: () => handleEnd(),
   });
 
-  const hasSavedGame =
-    quizState &&
-    quizState.currentQuestionIndex < quizState.totalQuestions &&
-    quizState.lives > 0;
+  if (!quizContext) return null;
+  const { quizState, setQuizState } = quizContext;
 
-  const { currentQuestionIndex } = quizState;
+  const { currentQuestionIndex, currentScreen, totalQuestions } = quizState;
 
-  const totalQuestions = questions.length;
+  const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
-  const startGame = () => {
-    setGameStarted(true);
-    setShowResult(false);
-    setGameOptionsVisible(false);
-    setIsPaused(false);
-    resetTimer()
+  // Handlers update currentScreen in context
+  const initializeGameplay = () => {
+    setQuizState(prev => ({ ...prev, currentScreen: 'game' }));
+    resetTimer();
     startTimer();
   };
 
@@ -57,106 +41,81 @@ function App() {
     setQuizState(prev => ({ ...prev, score: finalScore }));
   };
 
-  const pauseGame = () => {
-    setGameOptionsVisible(true);
-    setIsPaused(true);
-    setGameStarted(false);
+  const pauseGameplay = () => {
+    setQuizState(prev => ({ ...prev, currentScreen: 'pause' }));
     pauseTimer();
-    console.log('⏸ Game paused');
-  }
+  };
 
   const handleEnd = () => {
-    ;
-    setShowResult(true);
-    setGameStarted(false);
-    setGameOptionsVisible(false);
-    setIsPaused(false);
-    clearSavedQuiz();
+    setQuizState(prev => ({ ...prev, currentScreen: 'result' }));
   };
 
   const continueGame = () => {
-    setGameOptionsVisible(false);
-    setGameStarted(true);
-    setIsPaused(false);
+    setQuizState(prev => ({ ...prev, currentScreen: 'game' }));
     startTimer();
   };
 
   const restartGame = () => {
-    console.log('🔁 Restarting game');
-    clearSavedQuiz();
-    setGameStarted(true);
-    setIsPaused(false);
-    setGameOptionsVisible(false)
+    setQuizState(prev => ({
+      ...prev,
+      score: 0,
+      lives: 5,
+      timer: 30,
+      currentQuestionIndex: 0,
+      shuffledQuestions: shuffleArray(questions),
+      totalQuestions: questions.length,
+      currentScreen: 'game',
+    }));
     resetTimer();
     startTimer();
-
-    reset();
   };
 
   const goToStartScreen = () => {
-    setGameStarted(false);
-    setShowResult(false);
-    setIsPaused(false);
-    setGameOptionsVisible(false);
-
-    reset();
+    setQuizState(prev => ({
+      ...prev,
+      score: 0,
+      lives: 5,
+      timer: 30,
+      currentQuestionIndex: 0,
+      shuffledQuestions: shuffleArray(questions),
+      totalQuestions: questions.length,
+      currentScreen: 'start',
+    }));
   };
-
-  useEffect(() => {
-    if (hasSavedGame) {
-      setIsPaused(true);
-      setGameOptionsVisible(true);
-      setGameStarted(false);
-      // This ensures we show the pause screen
-    }
-  }, [hasSavedGame]);
-
-  const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
   return (
     <div className="app-container">
-      {isPaused && gameOptionsVisible && !gameStarted && !showResult && (
-        <div>
-          <div>
-            <span>{currentQuestionIndex + 1} / {totalQuestions}</span>
-            <Progress value={progress} className="h-2" />
-          </div>
-          <br />
-          <Card>
-            <div className='flex justify-center'>
-              <img src={haraldImage} alt="harald" className="shake" />
-            </div>
-            <div className="game-options">
-              <StyledButton onClick={continueGame}>Continue Game</StyledButton>
-              <StyledButton onClick={restartGame}>Restart Game</StyledButton>
-              <StyledButton onClick={handleEnd}>Exit Game</StyledButton>
-            </div>
-          </Card>
-        </div>
+      {currentScreen === 'start' && (
+        <StartScreen onGame={initializeGameplay} />
       )}
-
-      {!gameStarted && !gameOptionsVisible && !showResult && (
-        <Card>
-          <StyledButton onClick={startGame}>Start Quiz</StyledButton>
-        </Card>
+      {currentScreen === 'pause' && (
+        <PauseScreen
+          currentQuestionIndex={currentQuestionIndex}
+          totalQuestions={totalQuestions}
+          progress={progress}
+          score={quizState.score}
+          lives={quizState.lives}
+          onContinue={continueGame}
+          onRestart={restartGame}
+          onExit={handleEnd}
+        />
       )}
-
-      {gameStarted && !showResult && (
+      {currentScreen === 'game' && (
         <Quiz
           setScore={setScore}
           endGame={handleEnd}
-          startGame={startGame}
-          pauseGame={pauseGame}
+          startGame={initializeGameplay}
+          pauseGame={pauseGameplay}
           timeLeft={timeLeft}
           resetTimer={resetTimer}
         />
       )}
-
-
-      {showResult && (
-        <Card>
-          <Result onReturnToStart={goToStartScreen} />
-        </Card>
+      {currentScreen === 'result' && (
+        <ResultScreen
+          score={quizState.score}
+          totalQuestions={quizState.totalQuestions}
+          onReturnToStart={goToStartScreen}
+        />
       )}
     </div>
   );

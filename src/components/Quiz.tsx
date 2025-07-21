@@ -1,26 +1,14 @@
 // This file manages question logic and answer processing
 
-import { Progress } from '@/components/ui/progress';
-import { useQuizState } from '../hooks/useGameState';
+import QuizScreenProps from './ui/quizScreen';
 import { useTimer } from '../hooks/useTimer';
 import { useEffect, useState } from 'react';
-import { StyledButton } from './ui/Buttons';
-import { Card } from './ui/Card';
-import Question from './Question';
-import { EndReason } from '../lib/types';
-
-type QuizProps = {
-  setScore: (score: number) => void;
-  endGame: (reason: EndReason) => void;
-  startGame: () => void;
-  pauseGame: () => void;
-  timeLeft: number;
-  resetTimer: () => void;
-};
+import { QuizProps } from '../lib/types';
+import { useQuizState } from '../hooks/useGameState';
 
 function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }: QuizProps) {
   const {
-    quizState: { score, lives, currentQuestionIndex, shuffledQuestions, totalQuestions },
+    quizState: { score, lives, currentQuestionIndex, totalQuestions, shuffledQuestions },
     incrementScore,
     loseLife,
     nextQuestion,
@@ -28,7 +16,10 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
 
   const currentIndex = currentQuestionIndex;
   const isLastQuestion = currentIndex + 1 >= totalQuestions;
+  const currentQuestion = shuffledQuestions[currentIndex];
   const [shouldPause, setShouldPause] = useState(false);
+  const progress =
+    ((currentIndex + 1) / totalQuestions) * 100;
 
 
   useEffect(() => {
@@ -51,9 +42,9 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
 
   // Handle answer feedback and update score
   const handleAnswer = (isCorrect: boolean) => {
-    if (isCorrect === true) {
+    if (isCorrect) {
       incrementScore(1);
-    } else if (isCorrect === false) {
+    } else if (!isCorrect) {
       loseLife();
     }
   };
@@ -81,11 +72,9 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
     setScore(score);
     endGame('exit');
     resetTimer();
-    startGame()
   };
 
-  const progress =
-    ((currentIndex + 1) / totalQuestions) * 100;
+
 
   // Prevents rendering before shuffle is ready
   if (totalQuestions === 0) {
@@ -93,31 +82,21 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
   }
 
   return (
-    <div>
-      <div className="counter">
-        <span>{currentIndex + 1} / {totalQuestions}</span>
-        <Progress value={progress} className="h-3 border border-black" />
-        <br />
-      </div>
-      <Card score={score} lives={lives}>
-        <Question
-          key={currentIndex}
-          question={shuffledQuestions[currentIndex]}
-          onAnswer={handleAnswer}
-          onNext={handleNext}
-        />
-      </Card>
-      <div className="controls justify-center">
-        <StyledButton onClick={handleSkip}>Skip Question</StyledButton>
-        <StyledButton onClick={() => setShouldPause(true)}>
-          Pause Game
-        </StyledButton>
-
-        <StyledButton onClick={handleExit}>Exit Game</StyledButton>
-      </div>
-      <div>⏱️{timeLeft}</div>
-    </div>
-  );
+    <QuizScreenProps
+      score={score}
+      lives={lives}
+      progress={progress}
+      timeLeft={timeLeft}
+      currentIndex={currentIndex}
+      totalQuestions={totalQuestions}
+      currentQuestion={currentQuestion}
+      onAnswer={handleAnswer}
+      onNext={handleNext}
+      onSkip={handleSkip}
+      onPause={() => setShouldPause(true)}
+      onExit={handleExit}
+    />
+  )
 }
 
 export default Quiz;
