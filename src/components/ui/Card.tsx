@@ -1,7 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react';
-import closeIcon from '../../assets/close.png';
-import maximizeIcon from '../../assets/maximise.png';
-import minimizeIcon from '../../assets/minimize.png';
+import closeIcon from '../../assets/images/close.png';
+import maximizeIcon from '../../assets/images/maximise.png';
+import minimizeIcon from '../../assets/images/minimize.png';
+import heartIcon from '../../assets/images/heart.png'
 
 type CardProps = {
   score?: number
@@ -29,7 +30,16 @@ export function Card({
     >
       <div className="arial flex justify-between items-center h-10 border-b border-white/30 rounded-t-xl select-none">
         <div className="ml-4">{typeof score !== 'undefined' && `Score: ${score}`}</div>
-        <span className="lives-display">{'🩷'.repeat(lives)}</span>
+        <span className="lives-display">
+          {Array.from({ length: lives }).map((_, i) => (
+            <img
+              key={i}
+              src={heartIcon}
+              alt="life"
+              className="inline w-7 h-5 mx-0.5"
+            />
+          ))}
+        </span>
         <div className="flex mr-2 mt-[-21px]">
           <button
             style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`, }}
