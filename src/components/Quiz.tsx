@@ -4,7 +4,7 @@ import QuizScreenProps from './ui/quizScreen';
 import { useTimer } from '../hooks/useTimer';
 import { useEffect, useState } from 'react';
 import { QuizProps } from '../lib/types';
-import { useQuizState } from '../hooks/useGameState';
+import { useQuizState } from '../hooks/UseGameState';
 
 function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }: QuizProps) {
   const {
