@@ -1,5 +1,5 @@
 import React from "react";
-import QuestionScreen from './questionScreen';
+import Question from '../Question';
 import { Progress } from "./progress";
 import { QuizScreenProps } from '../../lib/types';
 import { StyledButton } from './Buttons';
@@ -20,6 +20,8 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
   onSkip,
   onPause,
   onExit,
+  onNext,
+  onAnswer
 }) => {
 
   return (
@@ -29,15 +31,11 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
         <Progress value={progress} className="border border-black" />
       </div>
       <Card score={score} lives={lives}>
-        <QuestionScreen
-          key={currentIndex}
-          question={currentQuestion.question}
-          options={currentQuestion.options}
-          selectedOption={null}
-          isSubmitted={false}
-          correctAnswer={currentQuestion.answer}
-          handleOptionChange={() => { }}
-          handleButtonClick={() => { }}
+        <Question
+          key={currentIndex} // Good to use key for list items or changing components
+          question={currentQuestion} // CORRECTED: Pass the entire QuestionData object
+          onAnswer={onAnswer} // Pass the onAnswer callback
+          onNext={onNext}
         />
       </Card>
       <div className="controls justify-center">

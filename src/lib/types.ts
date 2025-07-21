@@ -29,7 +29,7 @@ export type QuestionProps = {
   question: QuestionData
   onAnswer: (isCorrect: boolean) => void;
   onNext: () => void;
-};
+}
 
 export type QuizProps = {
   setScore: (score: number) => void;
@@ -74,12 +74,12 @@ export type ResultScreenProps = {
   onReturnToStart: () => void;
 };
 
-export type QuestionScreenProps = {
-  question: string;
-  options: string[];
-  selectedOption: string | null;
-  isSubmitted: boolean;
-  correctAnswer: string;
-  handleOptionChange: (option: string) => void;
-  handleButtonClick: () => void;
-};
+// export type QuestionProps = {
+//   question: string;
+//   options: string[];
+//   selectedOption: string | null;
+//   isSubmitted: boolean;
+//   correctAnswer: string;
+//   handleOptionChange: (option: string) => void;
+//   handleButtonClick: () => void;
+// };

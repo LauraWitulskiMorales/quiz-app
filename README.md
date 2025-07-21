@@ -84,8 +84,7 @@ src/
 │       ├── Progress.tsx
 │       ├── PauseScreen.tsx
 │       ├── StartScreen.tsx
-│       ├── ResultScreen.tsx
-│       └── QuestionScreen.tsx
+│       └── ResultScreen.tsx
 ├── context/
 │   └── QuizContext.tsx # Global state management via Context API
 ├── data/
@@ -108,7 +107,7 @@ src/
 * **`App.tsx`**: The central component orchestrating the overall application flow, including the start screen, the quiz game, and the result display.
 * **`Quiz.tsx`**: Manages the core quiz logic, including question progression, answer processing, and score updates.
 * **`Question.tsx`**: Responsible for rendering a single question and its associated answer options.
-* **UI Components (`src/components/ui` directory)**: A collection of presentational components (e.g., `Card.tsx`, `Buttons.tsx`, `Progress.tsx`, `StartScreen.tsx`, `ResultScreen.tsx`, `QuestionScreen.tsx`, `PauseScreen.tsx`) designed for reusability and consistent styling.
+* **UI Components (`src/components/ui` directory)**: A collection of presentational components (e.g., `Card.tsx`, `Buttons.tsx`, `Progress.tsx`, `StartScreen.tsx`, `ResultScreen.tsx`, `PauseScreen.tsx`) designed for reusability and consistent styling.
 
 ---
 
