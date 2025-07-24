@@ -1,3 +1,5 @@
+// Reusable Card component which content is then rendered in
+
 import type { CSSProperties, ReactNode } from 'react';
 import closeIcon from '../../assets/images/close.png';
 import maximizeIcon from '../../assets/images/maximise.png';

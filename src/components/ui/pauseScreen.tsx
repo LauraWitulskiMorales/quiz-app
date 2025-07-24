@@ -1,3 +1,5 @@
+//Pause Screen content
+
 import React from "react"
 import haraldImage from '../../assets/images/harald.png'
 import { Card } from "./Card"

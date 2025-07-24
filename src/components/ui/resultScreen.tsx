@@ -1,4 +1,5 @@
-//Result screen that is rendered when the game ends
+//Result screen content
+
 import { StyledButton } from './Buttons';
 import { Card } from './Card';
 import { ResultScreenProps } from '../../lib/types';

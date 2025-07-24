@@ -1,3 +1,5 @@
+// Start Screen content
+
 import { Card } from "./Card"
 import StyledButton from "./Buttons"
 import { StartScreenProps } from "../../lib/types"

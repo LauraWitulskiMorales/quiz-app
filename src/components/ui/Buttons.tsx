@@ -1,3 +1,5 @@
+// Reusable Button component
+
 import React from 'react';
 
 export const StyledButton: React.FC<

@@ -1,13 +1,11 @@
+// Quiz Screen content
+
 import React from "react";
 import Question from '../Question';
 import { Progress } from "./progress";
 import { QuizScreenProps } from '../../lib/types';
 import { StyledButton } from './Buttons';
 import { Card } from './Card';
-
-// shuffledQuestions[currentIndex]
-// 
-// setShouldPause
 
 const QuizScreen: React.FC<QuizScreenProps> = ({
   score,
@@ -32,9 +30,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({
       </div>
       <Card score={score} lives={lives}>
         <Question
-          key={currentIndex} // Good to use key for list items or changing components
-          question={currentQuestion} // CORRECTED: Pass the entire QuestionData object
-          onAnswer={onAnswer} // Pass the onAnswer callback
+          key={currentIndex}
+          question={currentQuestion}
+          onAnswer={onAnswer}
           onNext={onNext}
         />
       </Card>

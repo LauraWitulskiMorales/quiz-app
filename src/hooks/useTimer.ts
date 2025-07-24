@@ -1,4 +1,3 @@
-// hooks/useTimer.ts
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 type UseTimerOptions = {
@@ -13,7 +12,7 @@ export function useTimer({ duration, onTimeout }: UseTimerOptions) {
 
   // Starts or resumes timer
   const start = useCallback(() => {
-    if (intervalRef.current !== null) return; // already running
+    if (intervalRef.current !== null) return;
     isPausedRef.current = false;
 
     intervalRef.current = setInterval(() => {
@@ -38,7 +37,7 @@ export function useTimer({ duration, onTimeout }: UseTimerOptions) {
     }
   }, []);
 
-  // Resets the timer (e.g., for next question)
+  // Resets the timer
   const reset = useCallback(() => {
     pause();
     setTimeLeft(duration);

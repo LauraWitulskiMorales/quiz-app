@@ -27,7 +27,7 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
       pauseGame();
       setShouldPause(false);
     }
-  }, [shouldPause, lives]); // make sure it re-runs when lives update
+  }, [shouldPause, lives]);
 
   const handleSkip = () => {
     if (!isLastQuestion) {
@@ -40,7 +40,6 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
     }
   };
 
-  // Handle answer feedback and update score
   const handleAnswer = (isCorrect: boolean) => {
     if (isCorrect) {
       incrementScore(1);
@@ -50,7 +49,6 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
   };
 
   const handleNext = () => {
-    // move on to next question and end game if it was the last question
     if (!isLastQuestion && lives >= 1) {
       nextQuestion();
       resetTimer();
@@ -73,7 +71,6 @@ function Quiz({ setScore, endGame, startGame, pauseGame, timeLeft, resetTimer }:
     endGame('exit');
     resetTimer();
   };
-
 
 
   // Prevents rendering before shuffle is ready

@@ -31,6 +31,7 @@ function App() {
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
   // Handlers update currentScreen in context
+
   const initializeGameplay = () => {
     setQuizState(prev => ({ ...prev, currentScreen: 'game' }));
     resetTimer();
