@@ -1,11 +1,14 @@
+/// <reference types="@types/react" />
+
 // Start Screen content
 
+import * as React from 'react';
 import { Card } from "./Card"
 import StyledButton from "./Buttons"
 import { StartScreenProps } from "../../lib/types"
 import razorImage from '../../assets/images/razor.jpeg'
 
-const StartScreen: React.FC<StartScreenProps> = ({ onGame }) => {
+const StartScreen = ({ onGame }: StartScreenProps) => {
   return (
     <Card>
       <h1 className="brasika text-neutral-800 py-10">The Quiz That's SO 2000s</h1>

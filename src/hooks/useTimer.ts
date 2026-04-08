@@ -7,7 +7,7 @@ type UseTimerOptions = {
 
 export function useTimer({ duration, onTimeout }: UseTimerOptions) {
   const [timeLeft, setTimeLeft] = useState(duration);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
 
   // Starts or resumes timer

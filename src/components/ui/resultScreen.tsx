@@ -1,5 +1,6 @@
 //Result screen content
 
+import * as React from 'react';
 import { StyledButton } from './Buttons';
 import { Card } from './Card';
 import { ResultScreenProps } from '../../lib/types';

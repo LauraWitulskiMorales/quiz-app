@@ -42,26 +42,26 @@ export function Card({
             />
           ))}
         </span>
-        <div className="flex mr-2 mt-[-21px]">
+        <div className="flex mr-2 -mt-5.25">
           <button
             style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`, }}
-            className="card-button-gradient flex items-center justify-center w-[32px] h-[20px] rounded-bl-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
+            className="card-button-gradient flex items-center justify-center w-8 h-5 rounded-bl-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
           >
-            <img src={minimizeIcon} alt="minimize" className='w-[11px] h-[5px]' />
+            <img src={minimizeIcon} alt="minimize" className='w-2.75 h-1.25' />
           </button>
           <button
             style={{ backgroundImage: `linear-gradient(#ffffff80, #ffffff4d 45%, #0000001a 50%, #0000001a 75%, #ffffff80)`, }}
-            className="card-button-gradient flex items-center justify-center w-[32px] h-[20px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
+            className="card-button-gradient flex items-center justify-center w-8 h-5 border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
           >
-            <img src={maximizeIcon} alt="maximize" className='w-[11px] h-[10px]' />
+            <img src={maximizeIcon} alt="maximize" className='w-2.75 h-2.5' />
           </button>
           <button
             style={{
               backgroundImage: `radial-gradient(circle at -60% 50%, #0007 5% 10%, #0000 50%), radial-gradient(circle at 160% 50%, #0007 5% 10%, #0000 50%), linear-gradient(#e0a197e5, #cf796a 25% 50%, #d54f36 50%)`,
             }}
-            className="card-button-gradient-close flex items-center justify-center w-[45px] h-[20px] rounded-br-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
+            className="card-button-gradient-close flex items-center justify-center w-11.25 h-5 rounded-br-[5px] border border-gray-600 shadow-[0_0_7px_3px_#e68e75,var(--control-inset-shadow)] transition-opacity duration-300"
           >
-            <img src={closeIcon} alt="close" className="w-[11px] h-[10px]" />
+            <img src={closeIcon} alt="close" className="w-2.75 h-2.5" />
           </button>
         </div>
       </div>
